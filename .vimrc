@@ -27,15 +27,14 @@ set updatetime=50
 set shortmess+=c
 set colorcolumn=80
 
-":autocmd BufNewFile *.cpp 0r ~/.vim/templates/skeleton.cpp"
+:autocmd BufNewFile *.c 0r ~/.vim/templates/skeleton.c
+:autocmd BufNewFile *.h 0r ~/.vim/templates/skeleton.h
 
 highlight ColorColumn ctermbg=0 guibg=lightgrey
 let g:coc_disable_startup_warning = 1
 
-"Let clangd fully control code completion"
-"let g:ycm_clangd_uses_ycmd_caching = 0
-"" Use installed clangd, not YCM-bundled clangd which doesn't get updates.
 let g:ycm_clangd_binary_path = exepath("clangd")
+let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
 
 call plug#begin('~/.vim/plugged')
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -48,7 +47,6 @@ Plug 'junegunn/fzf.vim'
 
 Plug 'gruvbox-community/gruvbox'
 Plug 'sainnhe/gruvbox-material'
-Plug 'phanviet/vim-monokai-pro'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'flazz/vim-colorschemes'
@@ -65,3 +63,18 @@ let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.8 } }
 let $FZF_DEFAULT_OPTS='--reverse'
 
 nnoremap <C-p> :GFiles<CR>
+
+" Use tab for trigger completion with characters ahead and navigate.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <c-space> for trigger completion.
+inoremap <silent><expr> <c-space> coc#refresh()
