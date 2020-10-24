@@ -27,8 +27,11 @@ set updatetime=50
 set shortmess+=c
 set colorcolumn=80
 
+filetype plugin on
+
 :autocmd BufNewFile *.c 0r ~/.vim/templates/skeleton.c
 :autocmd BufNewFile *.h 0r ~/.vim/templates/skeleton.h
+:autocmd BufNewFile AUTHORS 0r ~/.vim/templates/AUTHORS
 
 highlight ColorColumn ctermbg=0 guibg=lightgrey
 let g:coc_disable_startup_warning = 1
@@ -38,6 +41,7 @@ let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
 
 call plug#begin('~/.vim/plugged')
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'preservim/nerdcommenter'
 Plug 'tpope/vim-fugitive'
 Plug 'vim-utils/vim-man'
 Plug 'mbbill/undotree'
@@ -78,3 +82,6 @@ endfunction
 
 " Use <c-space> for trigger completion.
 inoremap <silent><expr> <c-space> coc#refresh()
+
+nmap <C-_>   <Plug>NERDCommenterToggle
+vmap <C-_>   <Plug>NERDCommenterToggle<CR>gv
